@@ -48,12 +48,20 @@ public class ProductController {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    //Método Get
+    //Método Put
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO>  update(@PathVariable Long id,@RequestBody ProductDTO dto){
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id,@RequestBody ProductDTO dto){
         dto = service.update(id,dto);
         //Estamos custamizando a respota
         return ResponseEntity.ok(dto);
+    }
+
+    //Método Delete
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        //Código 204 é quando a respota deu certo e não corpo
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -53,11 +53,18 @@ ProductService {
         return new ProductDTO(entity);
     }
 
+    @Transactional
+    public void delete(Long id){
+        //Esse findById faz a consulta SQL no banco de dados
+        repository.deleteById(id);
+    }
+
     private void copyDTOToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
     }
+
 
 }
