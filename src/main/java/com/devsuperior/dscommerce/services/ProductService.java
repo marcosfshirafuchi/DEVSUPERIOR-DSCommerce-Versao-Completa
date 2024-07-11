@@ -24,6 +24,7 @@ ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id){
+        //Esse findById faz a consulta SQL no banco de dados
         Product product = repository.findById(id).get();
         return new ProductDTO(product);
     }
@@ -39,12 +40,24 @@ ProductService {
     @Transactional
     public ProductDTO insert(ProductDTO dto){
         Product entity = new Product();
+        copyDTOToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new ProductDTO(entity);
+    }
+
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO dto){
+        //Vai estanciar pelo id do banco de dados
+        Product entity = repository.getReferenceById(id);
+        copyDTOToEntity(dto, entity);
+        return new ProductDTO(entity);
+    }
+
+    private void copyDTOToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
-        entity = repository.save(entity);
-        return new ProductDTO(entity);
     }
 
 }
