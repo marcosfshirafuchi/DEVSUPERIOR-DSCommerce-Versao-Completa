@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
 
-//Pode colocar @Component ou service
 @Service
 public class
 ProductService {
@@ -39,8 +36,8 @@ ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable){
-        Page<Product> result = repository.findAll(pageable);
+    public Page<ProductDTO> findAll(String name, Pageable pageable){
+        Page<Product> result = repository.searchByName(name,pageable);
         //Converte lista de Product para lista ProductDTO
         //Converte cada registro da Lista Product(x) em um registro da Lista ProductDTO
         return result.map(x -> new ProductDTO(x));
