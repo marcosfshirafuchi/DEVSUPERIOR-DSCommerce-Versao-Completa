@@ -341,6 +341,7 @@ compras informado.</td></tr>
 </table>
 <br>
 <table>
+  
   <tbody align="left">
  <tr><td>Informações complementares</td></tr>
 <tr><td>[1] Dados do carrinho de compras: vide caso de uso Gerenciar carrinho.</td></tr>
@@ -348,3 +349,33 @@ compras informado.</td></tr>
   <tfoot></tfoot>
 </table>
 <br>
+
+
+## Modelo de dados User-Role
+
+<p align = center>
+
+<a href="https://ibb.co/BzwzH63"><img src="https://i.ibb.co/4mJmwSt/user-role.png" alt="user-role" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'></a><br />
+</p>
+
+## Mapeamento N-N
+
+```
+@ManyToMany
+@JoinTable(name = "tb_user_role",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+private Set<Role> roles = new HashSet<>();
+```
+
+
+## Seed
+
+```
+INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
+INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
+
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
+```
