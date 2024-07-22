@@ -1,9 +1,30 @@
-# <a href="https://imgbb.com/"><img src="https://i.ibb.co/51bfmLv/image-2024-07-01-T11-45-10-371-Z.png" alt="image-2024-07-01-T11-45-10-371-Z" border="0" width="300"></a> Java Spring Professional - Capítulo: API REST, camadas, CRUD, exceções, validações
+# <a href="https://imgbb.com/"><img src="https://i.ibb.co/51bfmLv/image-2024-07-01-T11-45-10-371-Z.png" alt="image-2024-07-01-T11-45-10-371-Z" border="0" width="300"></a> Java Spring Professional - Desafio 05
 
 #### Desenvolvido na linguagem Java por:
 - [Marcos Shirafuchi](https://github.com/marcosfshirafuchi)
 ## Formação Desenvolvedor Moderno Módulo: Back end
-Capítulo: API REST, camadas, CRUD, exceções, validações
+Capítulo: Login e controle de acesso
+## DESAFIO: Projeto Spring Boot estruturado
+
+Você deverá entregar o projeto DSCommerce estruturado e com todas funcionalidades implementadas
+conforme as aulas.<br>
+O projeto deve ser implementado com Java e Spring Boot, usando banco de dados H2, conforme aulas.<br>
+Para atestar que você implementou gradualmente o projeto, será exigido que seu projeto no Github tenha pelo
+menos 12 commits no seu usuário do Github.<br>
+
+### Critérios de correção
+
+1. Mínimo 12 commits no projeto no usuário do aluno <b>(eliminatório)</b>
+2. Endpoints públicos GET /produts e GET /products/{id} funcionam sem necessidade de login <b>(eliminatório)</b>
+3. Endpoint de login funcionando e retornando o token de acesso <b>(eliminatório)</b>
+4. Endpoints privados de produto (POST/PUT/DELETE) funcionam somente para usuário ADMIN <b>(eliminatório)</b>
+5. Endpoint GET /users/me retorna usuário logado <b>(eliminatório)</b>
+6. Endpoints GET /orders/{id} e POST /orders funcionando <b>(eliminatório) </b>
+7. Usuário que não é ADMIN não consegue acessar pedido que não é dele em GET /orders/{id} <b>(eliminatório)</b>
+8. Endpoint GET /categories retorna todas categorias
+
+<br>Lembre-se: a collection do Postman e o projeto pronto para referência estão disponíveis no material de apoio
+do capítulo.
 
 ## PROJETO: Sistema DSCommerce
 
@@ -350,15 +371,15 @@ compras informado.</td></tr>
 </table>
 <br>
 
-
-## Modelo de dados User-Role
+## Checklist: adicionar segurança ao projeto
+### Modelo de dados User-Role
 
 <p align = center>
 
 <a href="https://ibb.co/BzwzH63"><img src="https://i.ibb.co/4mJmwSt/user-role.png" alt="user-role" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'></a><br />
 </p>
 
-## Mapeamento N-N
+### Mapeamento N-N
 
 ```
 @ManyToMany
@@ -369,7 +390,7 @@ private Set<Role> roles = new HashSet<>();
 ```
 
 
-## Seed
+### Seed
 
 ```
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
@@ -378,4 +399,83 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
+```
+
+### Dependências
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-test</artifactId>
+	<scope>test</scope>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-oauth2-authorization-server</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+</dependency>
+```
+
+### Valores de configuração
+
+```
+security.client-id=${CLIENT_ID:myclientid}
+security.client-secret=${CLIENT_SECRET:myclientsecret}
+
+security.jwt.duration=${JWT_DURATION:86400}
+
+cors.origins=${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+```
+
+### Checklist OAuth2 JWT password grant
+
+- Implementação customizada do password grant
+- Authorization server
+- Resource server
+
+### Fazer o controle de acesso por perfil e rota
+
+
+
+
+### Checklist Spring security
+
+- GrantedAuthority
+- UserDetails
+- UserDetailsService
+- UsernameNotFoundException
+
+### Controle de acesso por perfil e rota
+
+```
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+
+@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
+```
+
+### Salvando um pedido
+
+```
+{
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 5,
+      "quantity": 1
+    }
+  ]
+}
 ```
