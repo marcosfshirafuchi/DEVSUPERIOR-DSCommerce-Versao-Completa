@@ -13,7 +13,7 @@ public class ClientDTO {
 
     public ClientDTO(User entity) {
         id = entity.getId();
-        name = entity.getUsername();
+        name = entity.getName();
     }
 
     public Long getId() {
