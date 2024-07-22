@@ -1,7 +1,6 @@
 package com.devsuperior.dscommerce.controllers;
 
 import com.devsuperior.dscommerce.dto.OrderDTO;
-import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.services.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+
+/**
+ * <h1> DEVSUPERIOR - Java Spring Professional - Capítulo: Login e controle de acesso</h1>
+ * DESAFIO: Projeto Spring Boot estruturado
+ * <p>
+ * <b>Note:</b> Desenvolvido na linguagem Java.
+ *
+ * @author  Marcos Ferreira Shirafuchi
+ * @version 1.0
+ * @since   22/07/2024
+ */
 
 
 //Essa anotation vai configurar quando a aplicação for executada, vai responder pela web

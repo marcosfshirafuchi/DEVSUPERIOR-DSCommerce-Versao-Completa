@@ -32,6 +32,17 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.util.Assert;
 
+/**
+ * <h1> DEVSUPERIOR - Java Spring Professional - Capítulo: Login e controle de acesso</h1>
+ * DESAFIO: Projeto Spring Boot estruturado
+ * <p>
+ * <b>Note:</b> Desenvolvido na linguagem Java.
+ *
+ * @author  Marcos Ferreira Shirafuchi
+ * @version 1.0
+ * @since   22/07/2024
+ */
+
 public class CustomPasswordAuthenticationProvider implements AuthenticationProvider {
 
 	private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
