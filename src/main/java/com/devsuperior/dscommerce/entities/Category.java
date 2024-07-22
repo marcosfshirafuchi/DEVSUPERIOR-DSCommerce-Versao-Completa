@@ -21,7 +21,7 @@ public class Category {
     //Quando não tem repetição, usar Set e não list
     private Set<Product> products = new HashSet<>();
 
-    private Category(){
+    public Category(){
 
     }
 

@@ -1,8 +1,10 @@
 package com.devsuperior.dscommerce.services;
 
 
+import com.devsuperior.dscommerce.dto.CategoryDTO;
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.dto.ProductMinDTO;
+import com.devsuperior.dscommerce.entities.Category;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
 import com.devsuperior.dscommerce.services.exceptions.DatabaseException;
@@ -58,6 +60,7 @@ ProductService {
             //Vai estanciar pelo id do banco de dados
             Product entity = repository.getReferenceById(id);
             copyDTOToEntity(dto, entity);
+            entity = repository.save(entity);
             return new ProductDTO(entity);
         }catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Recurso não encontrado");
@@ -83,6 +86,15 @@ ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+        //Limpar as categories
+        entity.getCategories().clear();
+        //Adicionar as novas categorias
+        for (CategoryDTO catDTO : dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(catDTO.getId());
+            //Inserindo as categories
+            entity.getCategories().add(cat);
+        }
     }
 
 
